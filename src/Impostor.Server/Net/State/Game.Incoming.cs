@@ -3,6 +3,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Impostor.Api.Games;
 using Impostor.Api.Innersloth;
+using Impostor.Api.Innersloth.GameOptions;
+using Impostor.Api.Innersloth.GameOptions.RoleOptions;
 using Impostor.Api.Net;
 using Impostor.Hazel;
 using Impostor.Server.Events;
@@ -22,6 +24,36 @@ namespace Impostor.Server.Net.State
             using var packet = MessageWriter.Get(MessageType.Reliable);
             message.CopyTo(packet);
             await SendToAllAsync(packet);
+
+            // Reset all options to defaults
+            if (Options is NormalGameOptions options)
+            {
+                options.MaxPlayers = 10;
+                options.Keywords = GameKeywords.English;
+                options.Map = MapTypes.Skeld;
+                options.NumImpostors = 1;
+                options.IsDefaults = true;
+                options.PlayerSpeedMod = 1f;
+                options.CrewLightMod = 1f;
+                options.ImpostorLightMod = 1f;
+                options.KillCooldown = 15f;
+                options.NumCommonTasks = 1;
+                options.NumLongTasks = 1;
+                options.NumShortTasks = 2;
+                options.NumEmergencyMeetings = 1;
+                options.EmergencyCooldown = 15;
+                options.GhostsDoTasks = true;
+                options.KillDistance = KillDistances.Normal;
+                options.DiscussionTime = 15;
+                options.VotingTime = 120;
+                options.ConfirmImpostor = true;
+                options.VisualTasks = true;
+                options.AnonymousVotes = false;
+                options.TaskBarUpdate = TaskBarUpdate.Always;
+                options.RoleOptions = new RoleOptionsCollection(options.Version);
+            }
+
+            await SyncSettingsAsync();
 
             await _eventManager.CallAsync(new GameStartingEvent(this));
         }
@@ -50,11 +82,17 @@ namespace Impostor.Server.Net.State
         {
             IsPublic = isPublic;
 
-            using var packet = MessageWriter.Get(MessageType.Reliable);
-            message.CopyTo(packet);
-            await SendToAllExceptAsync(packet, sender.Client.Id);
+            // using var packet = MessageWriter.Get(MessageType.Reliable);
+            // message.CopyTo(packet);
+            // await SendToAllExceptAsync(packet, sender.Client.Id);
 
-            await _eventManager.CallAsync(new GameAlterEvent(this, isPublic));
+            using (var writer = MessageWriter.Get(MessageType.Reliable))
+            {
+                WriteAlterGameMessage(writer, false, false);
+                await SendToAsync(writer, sender.Client.Id);
+            }
+
+            //await _eventManager.CallAsync(new GameAlterEvent(this, isPublic));
         }
 
         public async ValueTask HandleRemovePlayer(int playerId, DisconnectReason reason)

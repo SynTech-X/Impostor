@@ -18,6 +18,6 @@ namespace Impostor.Api.Games.Managers
         /// <param name="filterOptions">Filter options.</param>
         /// <returns>Created game or null if creation was cancelled by a plugin.</returns>
         /// <exception cref="ImpostorException">Thrown when game creation failed.</exception>
-        ValueTask<IGame?> CreateAsync(IGameOptions options, GameFilterOptions filterOptions);
+        ValueTask<IGame?> CreateAsync(IGameOptions options, GameFilterOptions filterOptions, GameCode? desiredGameCode = null);
     }
 }

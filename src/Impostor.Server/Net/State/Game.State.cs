@@ -61,8 +61,10 @@ namespace Impostor.Server.Net.State
             {
                 GameState = GameStates.Destroyed;
 
+                // Recreate game if deleted cause empty.
+                // Tried to just not delete but that leads to issues when the client tries to rejoin.
                 // Remove instance reference.
-                await _gameManager.RemoveAsync(Code);
+                await _gameManager.RemoveAsync(Code, true);
                 return true;
             }
 

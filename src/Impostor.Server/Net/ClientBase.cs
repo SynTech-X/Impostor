@@ -33,7 +33,7 @@ namespace Impostor.Server.Net
 
         public int GameVersion { get; }
 
-        public IHazelConnection Connection { get; }
+        public IHazelConnection Connection { get; set; }
 
         public IDictionary<object, object> Items { get; }
 

@@ -89,7 +89,7 @@
       "impostor.client": {
         "type": "Project",
         "dependencies": {
-          "Impostor.Api": "[1.7.3-dev, )",
+          "Impostor.Api": "[1.8.0-dev, )",
           "Impostor.Hazel": "[1.0.0, )"
         }
       }

@@ -45,6 +45,95 @@
         "resolved": "2.4.5",
         "contentHash": "OwHamvBdUKgqsXfBzWiCW/O98BTx81UKzx2bieIOQI7CZFE5NEQZGi8PBQGIKawDW96xeRffiNf20SjfC0x9hw=="
       },
+      "Disqord": {
+        "type": "Transitive",
+        "resolved": "1.0.0-alpha3.40",
+        "contentHash": "G71zP3OxMvVVByMUM0G2/Erhfwwxq933k+f3cXBpYwKNB8DUW6LU4zS8AzGsHHRa93nI3VnN8YLIwgJACey1XA==",
+        "dependencies": {
+          "Disqord.Extensions.Interactivity": "1.0.0-alpha3.40",
+          "Disqord.Gateway": "1.0.0-alpha3.40",
+          "Disqord.Rest": "1.0.0-alpha3.40",
+          "Disqord.Webhook": "1.0.0-alpha3.40",
+          "Microsoft.Extensions.Hosting.Abstractions": "5.0.0"
+        }
+      },
+      "Disqord.Abstractions": {
+        "type": "Transitive",
+        "resolved": "1.0.0-alpha3.40",
+        "contentHash": "c7KSn5CRT9vw2nv1e2Q3CSybd9dzCKFr4a9mephll3LXolfQx3XlwlASo3oPCY/36RQlvWIhJxay0viotZwiUA==",
+        "dependencies": {
+          "Disqord.Gateway": "1.0.0-alpha3.40",
+          "Disqord.Rest": "1.0.0-alpha3.40"
+        }
+      },
+      "Disqord.Bot": {
+        "type": "Transitive",
+        "resolved": "1.0.0-alpha3.40",
+        "contentHash": "RP2Zq9k8rRkH8VXWity90AhRWUk6EuL1sYtVqrBko6kMrAsxKco4tnBZMV0oFRatfpshOsA0/lOkAFKoW6C7rg==",
+        "dependencies": {
+          "Disqord": "1.0.0-alpha3.40",
+          "Qmmands": "6.0.0-alpha6"
+        }
+      },
+      "Disqord.Core": {
+        "type": "Transitive",
+        "resolved": "1.0.0-alpha3.40",
+        "contentHash": "fcb3TnQ+8cttVJFLJ2/TlB226O+QM5m8ux5wlfLFixuDXvfoA57mj2k8s0TxcmaLyCwAWo5MwduCiFp8KKUKKg==",
+        "dependencies": {
+          "Microsoft.Extensions.Logging.Abstractions": "6.0.1",
+          "Microsoft.Extensions.Options": "6.0.0",
+          "Newtonsoft.Json": "13.0.1",
+          "Qommon": "3.0.4"
+        }
+      },
+      "Disqord.Extensions.Interactivity": {
+        "type": "Transitive",
+        "resolved": "1.0.0-alpha3.40",
+        "contentHash": "ieAtsEQjyVyfbuuMwL0JhU/dlCK6s4t0t01VD3aCdAd5dT8fv4uPf5b4DPmOXU8SPPNJJo6jz0IRKm5JzE2PUQ==",
+        "dependencies": {
+          "Disqord.Abstractions": "1.0.0-alpha3.40"
+        }
+      },
+      "Disqord.Gateway": {
+        "type": "Transitive",
+        "resolved": "1.0.0-alpha3.40",
+        "contentHash": "ZfbI5qePfwxTgurFKqRMqqE0QlIGwAH0Ff/dkuaEHPptFqFJ/kQB5LPzgB/sX0m09dzv7IXwUh3bMqUNkzSInw==",
+        "dependencies": {
+          "Disqord.Gateway.Api": "1.0.0-alpha3.40"
+        }
+      },
+      "Disqord.Gateway.Api": {
+        "type": "Transitive",
+        "resolved": "1.0.0-alpha3.40",
+        "contentHash": "3y/A1VCKunYlMjPbKTyEhC96a13Ab1amYtxRiQyPebEnyq6pkknVIQ6EGegUkb6ETdHvozYmxJ0kXVIr0/DgBg==",
+        "dependencies": {
+          "Disqord.Core": "1.0.0-alpha3.40"
+        }
+      },
+      "Disqord.Rest": {
+        "type": "Transitive",
+        "resolved": "1.0.0-alpha3.40",
+        "contentHash": "l7oemDCYbiXR+760Kn9mUQGK2Lrs09oS8PZvJwERafNTP4xBrhutGT9xJYvwv4AVlSIlUAjtLg9VVdg6GqyJvg==",
+        "dependencies": {
+          "Disqord.Rest.Api": "1.0.0-alpha3.40"
+        }
+      },
+      "Disqord.Rest.Api": {
+        "type": "Transitive",
+        "resolved": "1.0.0-alpha3.40",
+        "contentHash": "95SFhx0jA5HGsV1m0DnithopEENeN1xjtVkwVG9T5ZcUBgoVG0XVSLUveCCWlddoODMfYUFx6fvS14OsXNIKaw==",
+        "dependencies": {
+          "Disqord.Core": "1.0.0-alpha3.40"
+        }
+      },
+      "Disqord.Webhook": {
+        "type": "Transitive",
+        "resolved": "1.0.0-alpha3.40",
+        "contentHash": "bbs3LoxGPstP+2rhIbkFV1gHvReunkzKBwNeJr3Lmhlf2lBcOj4xtMiVFP/xn4YzrcHVMAK9s2M8w+FhIKo1Aw==",
+        "dependencies": {
+          "Disqord.Rest": "1.0.0-alpha3.40"
+        }
+      },
       "Impostor.Hazel": {
         "type": "Transitive",
         "resolved": "1.0.0",
@@ -434,6 +523,22 @@
         "type": "Transitive",
         "resolved": "5.11.0",
         "contentHash": "eaiXkUjC4NPcquGWzAGMXjuxvLwc6XGKMptSyOGQeT0X70BUZObuybJFZLA0OfTdueLd3US23NBPTBb6iF3V1Q=="
+      },
+      "Qmmands": {
+        "type": "Transitive",
+        "resolved": "6.0.0-alpha6",
+        "contentHash": "AbKzmpRVA8SrBRxDCtrhLxFj0pZ1pQF5ppKyOZKgDJbBYjrYSv1z9TuiUz4lU4fMMWUqDP89I2ex9MBKuiF6Dw==",
+        "dependencies": {
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "5.0.0",
+          "Microsoft.Extensions.Logging.Abstractions": "5.0.0",
+          "Microsoft.Extensions.Options": "5.0.0",
+          "Qommon": "3.0.3"
+        }
+      },
+      "Qommon": {
+        "type": "Transitive",
+        "resolved": "3.0.4",
+        "contentHash": "0BkYVVRaG+snmnJ0By62QAcWiQ0Nn+WjLeClpY9nn4UGUfVpWg/lLJ7zbH6dDwdozA5rpuBjl3ZhiFtk2r6cRQ=="
       },
       "runtime.debian.8-x64.runtime.native.System.Security.Cryptography.OpenSsl": {
         "type": "Transitive",
@@ -1405,7 +1510,8 @@
       "impostor.server": {
         "type": "Project",
         "dependencies": {
-          "Impostor.Api": "[1.7.3-dev, )",
+          "Disqord.Bot": "[1.0.0-alpha3.40, )",
+          "Impostor.Api": "[1.8.0-dev, )",
           "Impostor.Hazel": "[1.0.0, )",
           "Microsoft.Extensions.FileSystemGlobbing": "[7.0.0, )",
           "Microsoft.Extensions.Hosting": "[7.0.0, )",

@@ -65,6 +65,10 @@ namespace Impostor.Server.Net
             {
                 case MessageFlags.HostGame:
                 {
+                    // Disable hosting games manually
+                    await DisconnectAsync(DisconnectReason.Custom, "Hosting games is not allowed on the SynTech-X server.");
+                    return;
+
                     // Read game settings.
                     Message00HostGameC2S.Deserialize(reader, out var gameOptions, out _, out var gameFilterOptions);
 
@@ -238,23 +242,25 @@ namespace Impostor.Server.Net
                         return;
                     }
 
-                    await Player!.Game.HandleAlterGame(reader, Player, value);
+                    // Disable changing privacy
+                    await Player!.Game.HandleAlterGame(reader, Player, false);
                     break;
                 }
 
                 case MessageFlags.KickPlayer:
                 {
-                    if (!IsPacketAllowed(reader, true))
-                    {
-                        return;
-                    }
-
-                    Message11KickPlayerC2S.Deserialize(
-                        reader,
-                        out var playerId,
-                        out var isBan);
-
-                    await Player!.Game.HandleKickPlayer(playerId, isBan);
+                    // Disable kicking and banning
+                    // if (!IsPacketAllowed(reader, true))
+                    // {
+                    //     return;
+                    // }
+                    //
+                    // Message11KickPlayerC2S.Deserialize(
+                    //     reader,
+                    //     out var playerId,
+                    //     out var isBan);
+                    //
+                    // await Player!.Game.HandleKickPlayer(playerId, isBan);
                     break;
                 }
 

@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Loader;
+using Disqord.Bot.Hosting;
 using Impostor.Api.Config;
 using Impostor.Api.Events.Managers;
 using Impostor.Api.Games;
@@ -11,6 +12,7 @@ using Impostor.Api.Net.Custom;
 using Impostor.Api.Net.Manager;
 using Impostor.Api.Utils;
 using Impostor.Hazel.Extensions;
+using Impostor.Server.Discord;
 using Impostor.Server.Events;
 using Impostor.Server.Net;
 using Impostor.Server.Net.Custom;
@@ -183,6 +185,10 @@ namespace Impostor.Server
                         .ReadFrom.Configuration(context.Configuration, ConfigurationAssemblySource.AlwaysScanDllFiles);
 
                     AssemblyLoadContext.Default.Resolving -= LoadSerilogAssembly;
+                })
+                .ConfigureDiscordBot((context, bot) =>
+                {
+                    bot.Token = context.Configuration["BOT_TOKEN"];
                 })
                 .UseConsoleLifetime()
                 .UsePluginLoader(pluginConfig);

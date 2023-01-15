@@ -94,7 +94,7 @@ namespace Impostor.Server.Net.Manager
             }
         }
 
-        public async ValueTask RemoveAsync(GameCode gameCode)
+        public async ValueTask RemoveAsync(GameCode gameCode, bool shouldRecreate = false)
         {
             if (_games.TryGetValue(gameCode, out var game) && game.PlayerCount > 0)
             {
@@ -114,11 +114,15 @@ namespace Impostor.Server.Net.Manager
             _logger.LogDebug("Remove game with code {0} ({1}).", GameCodeParser.IntToGameName(gameCode), gameCode);
 
             await _eventManager.CallAsync(new GameDestroyedEvent(game));
+
+            // Recreate the game if needed.
+            await CreateAsync(null, new NormalGameOptions(), new GameFilterOptions(), gameCode);
         }
 
-        public async ValueTask<IGame?> CreateAsync(IClient? owner, IGameOptions options, GameFilterOptions filterOptions)
+        public async ValueTask<IGame?> CreateAsync(IClient? owner, IGameOptions options, GameFilterOptions filterOptions, GameCode? desiredGameCode = null)
         {
             var @event = new GameCreationEvent(this, owner);
+            @event.GameCode = desiredGameCode;
             await _eventManager.CallAsync(@event);
 
             if (@event.IsCancelled)
@@ -130,7 +134,7 @@ namespace Impostor.Server.Net.Manager
 
             for (var i = 0; i < 10 && !success; i++)
             {
-                (success, game) = await TryCreateAsync(options, filterOptions);
+                (success, game) = await TryCreateAsync(options, filterOptions, desiredGameCode);
             }
 
             if (!success || game == null)
@@ -141,9 +145,9 @@ namespace Impostor.Server.Net.Manager
             return game;
         }
 
-        public ValueTask<IGame?> CreateAsync(IGameOptions options, GameFilterOptions filterOptions)
+        public ValueTask<IGame?> CreateAsync(IGameOptions options, GameFilterOptions filterOptions, GameCode? desiredGameCode = null)
         {
-            return CreateAsync(null, options, filterOptions);
+            return CreateAsync(null, options, filterOptions, desiredGameCode);
         }
 
         private async ValueTask<(bool Success, Game? Game)> TryCreateAsync(IGameOptions options, GameFilterOptions filterOptions, GameCode? desiredGameCode = null)

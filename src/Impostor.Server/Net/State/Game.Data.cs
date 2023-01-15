@@ -345,6 +345,13 @@ namespace Impostor.Server.Net.State
                     if (player != null)
                     {
                         await _eventManager.CallAsync(new PlayerSpawnedEvent(this, player, control));
+
+                        Task.Run(async () =>
+                        {
+                            // Give the player time to load.
+                            await Task.Delay(TimeSpan.FromSeconds(3));
+                            await control.SendChatToPlayerAsync("Welcome to the SynTech-X Among Us Event!");
+                        });
                     }
 
                     break;
