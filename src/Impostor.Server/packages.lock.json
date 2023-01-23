@@ -98,6 +98,15 @@
           "Serilog": "2.10.0"
         }
       },
+      "Serilog.Sinks.File": {
+        "type": "Direct",
+        "requested": "[5.0.1-dev-00947, )",
+        "resolved": "5.0.1-dev-00947",
+        "contentHash": "rCxuBUTC4v/Mawa2bCD0CkEODiCIJqQvxZfWmZb9O2W1hcZ77WCrNGw2nKnXCuSII4cuWip9QwWbn9wmLzS5sA==",
+        "dependencies": {
+          "Serilog": "2.10.0"
+        }
+      },
       "StyleCop.Analyzers.Unstable": {
         "type": "Direct",
         "requested": "[1.2.0.435, )",

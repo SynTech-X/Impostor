@@ -181,6 +181,7 @@ namespace Impostor.Server.Net.Inner.Objects
             if (playerState.DidVote && !playerState.IsDead)
             {
                 var player = playerState.TargetPlayer.Controller!;
+                _logger.LogInformation("VOTE ({0}): {1} voted for {2}", this.Game.Code, player.PlayerInfo.PlayerName, playerState.VotedFor.PlayerInfo.PlayerName);
                 await _eventManager.CallAsync(new PlayerVotedEvent(Game, Game.GetClientPlayer(player!.OwnerId)!, player, playerState.VoteType!.Value, playerState.VotedFor));
             }
         }
@@ -290,6 +291,7 @@ namespace Impostor.Server.Net.Inner.Objects
             if (exiled != null)
             {
                 exiled.Die(DeathReason.Exile);
+                _logger.LogInformation("VOTE ({0}): {1} was ejected", this.Game.Code, exiled.PlayerInfo.PlayerName);
                 await _eventManager.CallAsync(new PlayerExileEvent(Game, Game.GetClientPlayer(exiled!.OwnerId)!, exiled));
             }
 

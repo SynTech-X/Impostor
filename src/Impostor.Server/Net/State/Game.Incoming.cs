@@ -75,6 +75,8 @@ namespace Impostor.Server.Net.State
                 player.Value.Limbo = LimboStates.PreSpawn;
             }
 
+            _logger.LogInformation("GAME OVER ({0}): {1}", Code, gameOverReason);
+
             await _eventManager.CallAsync(new GameEndedEvent(this, gameOverReason));
         }
 

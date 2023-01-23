@@ -554,6 +554,14 @@
           "Serilog": "2.10.0"
         }
       },
+      "Serilog.Sinks.File": {
+        "type": "Transitive",
+        "resolved": "5.0.1-dev-00947",
+        "contentHash": "rCxuBUTC4v/Mawa2bCD0CkEODiCIJqQvxZfWmZb9O2W1hcZ77WCrNGw2nKnXCuSII4cuWip9QwWbn9wmLzS5sA==",
+        "dependencies": {
+          "Serilog": "2.10.0"
+        }
+      },
       "System.CodeDom": {
         "type": "Transitive",
         "resolved": "6.0.0",
@@ -648,7 +656,8 @@
           "Microsoft.Extensions.ObjectPool": "[7.0.1, )",
           "Serilog.Extensions.Hosting": "[5.0.1, )",
           "Serilog.Settings.Configuration": "[3.4.0, )",
-          "Serilog.Sinks.Console": "[4.1.0, )"
+          "Serilog.Sinks.Console": "[4.1.0, )",
+          "Serilog.Sinks.File": "[5.0.1-dev-00947, )"
         }
       }
     }

@@ -12,7 +12,6 @@ using Impostor.Api.Net.Custom;
 using Impostor.Api.Net.Manager;
 using Impostor.Api.Utils;
 using Impostor.Hazel.Extensions;
-using Impostor.Server.Discord;
 using Impostor.Server.Events;
 using Impostor.Server.Net;
 using Impostor.Server.Net.Custom;
@@ -38,6 +37,7 @@ namespace Impostor.Server
         {
             Log.Logger = new LoggerConfiguration()
                 .WriteTo.Console()
+                .WriteTo.File($"logs/log-{DateTime.Now}.txt", LogEventLevel.Debug, fileSizeLimitBytes: null, buffered: true)
                 .CreateBootstrapLogger();
 
             try

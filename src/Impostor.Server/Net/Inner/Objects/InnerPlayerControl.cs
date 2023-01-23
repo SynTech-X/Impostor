@@ -685,6 +685,7 @@ namespace Impostor.Server.Net.Inner.Objects
             if (target != null && !target.PlayerInfo.IsDead)
             {
                 ((InnerPlayerControl)target).Die(DeathReason.Kill);
+                _logger.LogInformation("MURDER ({0}): {1} killed {2}", this.Game.Code, PlayerInfo.PlayerName, target.PlayerInfo.PlayerName);
                 await _eventManager.CallAsync(new PlayerMurderEvent(Game, sender, this, target));
             }
 

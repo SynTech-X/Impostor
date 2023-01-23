@@ -7,6 +7,7 @@ using Impostor.Api.Net.Inner.Objects;
 using Impostor.Api.Net.Inner.Objects.Components;
 using Impostor.Api.Net.Messages.Rpcs;
 using Impostor.Server.Events.Player;
+using Microsoft.Extensions.Logging;
 
 namespace Impostor.Server.Net.Inner.Objects
 {
@@ -100,6 +101,7 @@ namespace Impostor.Server.Net.Inner.Objects
             }
 
             ((InnerPlayerControl)target).Die(DeathReason.Kill);
+            _logger.LogInformation("MURDER ({0}): {1} killed {2}", this.Game.Code, PlayerInfo.PlayerName, target.PlayerInfo.PlayerName);
 
             using var writer = Game.StartRpc(NetId, RpcCalls.MurderPlayer);
             Rpc12MurderPlayer.Serialize(writer, target);
