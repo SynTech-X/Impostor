@@ -13,8 +13,10 @@ using Impostor.Api.Innersloth;
 using Impostor.Api.Innersloth.GameOptions;
 using Impostor.Api.Net;
 using Impostor.Api.Net.Messages.S2C;
+using Impostor.Server.Discord.Services;
 using Impostor.Server.Events;
 using Impostor.Server.Net.Manager;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
@@ -30,6 +32,7 @@ namespace Impostor.Server.Net.State
         private readonly HashSet<IPAddress> _bannedIps;
         private readonly IEventManager _eventManager;
         private readonly CompatibilityConfig _compatibilityConfig;
+        private readonly LogService _logService;
 
         public Game(
             ILogger<Game> logger,
@@ -48,6 +51,7 @@ namespace Impostor.Server.Net.State
             _gameManager = gameManager;
             _players = new ConcurrentDictionary<int, ClientPlayer>();
             _bannedIps = new HashSet<IPAddress>();
+            _logService = serviceProvider.GetRequiredService<LogService>();
 
             PublicIp = publicIp;
             Code = code;

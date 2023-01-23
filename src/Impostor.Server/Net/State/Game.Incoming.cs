@@ -33,19 +33,19 @@ namespace Impostor.Server.Net.State
                 options.Map = MapTypes.Skeld;
                 options.NumImpostors = 1;
                 options.IsDefaults = true;
-                options.PlayerSpeedMod = 1f;
-                options.CrewLightMod = 1f;
-                options.ImpostorLightMod = 1f;
-                options.KillCooldown = 15f;
+                options.PlayerSpeedMod = 1.25f;
+                options.CrewLightMod = 0.75f;
+                options.ImpostorLightMod = 1.5f;
+                options.KillCooldown = 20f;
                 options.NumCommonTasks = 1;
                 options.NumLongTasks = 1;
-                options.NumShortTasks = 2;
+                options.NumShortTasks = 5;
                 options.NumEmergencyMeetings = 1;
                 options.EmergencyCooldown = 15;
                 options.GhostsDoTasks = true;
                 options.KillDistance = KillDistances.Normal;
-                options.DiscussionTime = 15;
-                options.VotingTime = 120;
+                options.DiscussionTime = 30;
+                options.VotingTime = 30;
                 options.ConfirmImpostor = true;
                 options.VisualTasks = true;
                 options.AnonymousVotes = false;
@@ -75,7 +75,9 @@ namespace Impostor.Server.Net.State
                 player.Value.Limbo = LimboStates.PreSpawn;
             }
 
-            _logger.LogInformation("GAME OVER ({0}): {1}", Code, gameOverReason);
+            var msg = $"GAME OVER ({Code}): {gameOverReason}";
+            _logger.LogInformation(msg);
+            _logService.LazyLog(msg);
 
             await _eventManager.CallAsync(new GameEndedEvent(this, gameOverReason));
         }
