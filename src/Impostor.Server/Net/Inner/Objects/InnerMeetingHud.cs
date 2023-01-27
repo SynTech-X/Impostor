@@ -184,7 +184,9 @@ namespace Impostor.Server.Net.Inner.Objects
             if (playerState.DidVote && !playerState.IsDead)
             {
                 var player = playerState.TargetPlayer.Controller!;
-                _logger.LogInformation("VOTE ({0}): {1} voted for {2}", this.Game.Code, player.PlayerInfo.PlayerName, playerState.VotedFor.PlayerInfo.PlayerName);
+                var msg = $"VOTE ({this.Game.Code}): {player.PlayerInfo.PlayerName} voted for {playerState.VotedFor.PlayerInfo.PlayerName}";
+                _logger.LogInformation(msg);
+                _logService.LazyLog(msg);
                 await _eventManager.CallAsync(new PlayerVotedEvent(Game, Game.GetClientPlayer(player!.OwnerId)!, player, playerState.VoteType!.Value, playerState.VotedFor));
             }
         }
