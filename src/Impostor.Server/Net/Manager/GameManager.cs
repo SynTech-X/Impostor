@@ -12,6 +12,7 @@ using Impostor.Api.Games.Managers;
 using Impostor.Api.Innersloth;
 using Impostor.Api.Innersloth.GameOptions;
 using Impostor.Api.Net;
+using Impostor.Server.Discord.Services;
 using Impostor.Server.Events;
 using Impostor.Server.Net.State;
 using Microsoft.Extensions.DependencyInjection;
@@ -29,8 +30,9 @@ namespace Impostor.Server.Net.Manager
         private readonly IServiceProvider _serviceProvider;
         private readonly IEventManager _eventManager;
         private readonly IGameCodeFactory _gameCodeFactory;
+        private readonly LogService _logService;
 
-        public GameManager(ILogger<GameManager> logger, IOptions<ServerConfig> config, IServiceProvider serviceProvider, IEventManager eventManager, IGameCodeFactory gameCodeFactory, IOptions<CompatibilityConfig> compatibilityConfig)
+        public GameManager(ILogger<GameManager> logger, IOptions<ServerConfig> config, IServiceProvider serviceProvider, IEventManager eventManager, IGameCodeFactory gameCodeFactory, IOptions<CompatibilityConfig> compatibilityConfig, LogService logService)
         {
             _logger = logger;
             _serviceProvider = serviceProvider;
@@ -39,6 +41,7 @@ namespace Impostor.Server.Net.Manager
             _publicIp = new IPEndPoint(IPAddress.Parse(config.Value.ResolvePublicIp()), config.Value.PublicPort);
             _games = new ConcurrentDictionary<int, Game>();
             _compatibilityConfig = compatibilityConfig.Value;
+            _logService = logService;
         }
 
         IEnumerable<IGame> IGameManager.Games => _games.Select(kv => kv.Value);
@@ -160,7 +163,9 @@ namespace Impostor.Server.Net.Manager
                 return (false, null);
             }
 
-            _logger.LogDebug("Created game with code {0}.", game.Code);
+            var msg = $"Created game with code {game.Code}.";
+            _logger.LogDebug(msg);
+            _logService.LazyLog(msg);
 
             await _eventManager.CallAsync(new GameCreatedEvent(game));
 
