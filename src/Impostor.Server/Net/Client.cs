@@ -6,6 +6,7 @@ using Impostor.Api.Config;
 using Impostor.Api.Games;
 using Impostor.Api.Innersloth;
 using Impostor.Api.Innersloth.GameOptions;
+using Impostor.Api.Innersloth.GameOptions.RoleOptions;
 using Impostor.Api.Net;
 using Impostor.Api.Net.Custom;
 using Impostor.Api.Net.Messages;
@@ -70,13 +71,35 @@ namespace Impostor.Server.Net
                     //return;
 
                     // Read game settings.
-                    Message00HostGameC2S.Deserialize(reader, out var gameOptions, out _, out var gameFilterOptions);
+                    Message00HostGameC2S.Deserialize(reader, out _, out _, out var gameFilterOptions);
 
-                    gameOptions.NumImpostors = 15;
-                    gameOptions.MaxPlayers = 15;
+                    var options = new NormalGameOptions();
+                    options.MaxPlayers = 15;
+                    options.Keywords = GameKeywords.English;
+                    options.Map = MapTypes.Skeld;
+                    options.NumImpostors = 1;
+                    options.IsDefaults = true;
+                    options.PlayerSpeedMod = 1.25f;
+                    options.CrewLightMod = 0.75f;
+                    options.ImpostorLightMod = 1.5f;
+                    options.KillCooldown = 20f;
+                    options.NumCommonTasks = 1;
+                    options.NumLongTasks = 1;
+                    options.NumShortTasks = 5;
+                    options.NumEmergencyMeetings = 1;
+                    options.EmergencyCooldown = 15;
+                    options.GhostsDoTasks = true;
+                    options.KillDistance = KillDistances.Normal;
+                    options.DiscussionTime = 30;
+                    options.VotingTime = 30;
+                    options.ConfirmImpostor = true;
+                    options.VisualTasks = true;
+                    options.AnonymousVotes = false;
+                    options.TaskBarUpdate = TaskBarUpdate.Always;
+                    options.RoleOptions = new RoleOptionsCollection(options.Version);
 
                     // Create game.
-                    var game = await _gameManager.CreateAsync(this, gameOptions, gameFilterOptions);
+                    var game = await _gameManager.CreateAsync(this, options, gameFilterOptions);
 
                     if (game == null)
                     {
