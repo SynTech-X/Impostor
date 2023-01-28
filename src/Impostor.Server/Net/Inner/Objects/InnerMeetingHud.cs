@@ -181,7 +181,8 @@ namespace Impostor.Server.Net.Inner.Objects
             if (playerState.DidVote && !playerState.IsDead)
             {
                 var player = playerState.TargetPlayer.Controller!;
-                var msg = $"VOTE ({this.Game.Code}): {player.PlayerInfo.PlayerName} voted for {playerState.VotedFor.PlayerInfo.PlayerName}";
+                var voted = playerState.VotedFor;
+                var msg = $"VOTE ({this.Game.Code}): {player.PlayerInfo.PlayerName} voted for {(voted != null ? voted.PlayerInfo.PlayerName : "SKIP VOTE")}";
                 _logger.LogInformation(msg);
                 await _eventManager.CallAsync(new PlayerVotedEvent(Game, Game.GetClientPlayer(player!.OwnerId)!, player, playerState.VoteType!.Value, playerState.VotedFor));
             }
