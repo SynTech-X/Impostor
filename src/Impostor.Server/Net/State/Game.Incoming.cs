@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Impostor.Api.Games;
@@ -28,10 +29,18 @@ namespace Impostor.Server.Net.State
             // Reset all options to defaults
             if (Options is NormalGameOptions options)
             {
-                options.MaxPlayers = 10;
+                var playerCount = Players.Count();
+                var impostors = 1;
+
+                if (playerCount >= 12)
+                    impostors = 3;
+                else if (playerCount > 7)
+                    impostors = 2;
+
+                options.MaxPlayers = 15;
                 options.Keywords = GameKeywords.English;
                 options.Map = MapTypes.Skeld;
-                options.NumImpostors = 1;
+                options.NumImpostors = impostors;
                 options.IsDefaults = true;
                 options.PlayerSpeedMod = 1.25f;
                 options.CrewLightMod = 0.75f;
@@ -77,7 +86,6 @@ namespace Impostor.Server.Net.State
 
             var msg = $"GAME OVER ({Code}): {gameOverReason}";
             _logger.LogInformation(msg);
-            _logService.LazyLog(msg);
 
             await _eventManager.CallAsync(new GameEndedEvent(this, gameOverReason));
         }

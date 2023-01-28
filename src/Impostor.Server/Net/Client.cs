@@ -66,11 +66,14 @@ namespace Impostor.Server.Net
                 case MessageFlags.HostGame:
                 {
                     // Disable hosting games manually
-                    await DisconnectAsync(DisconnectReason.Custom, "Hosting games is not allowed on the SynTech-X server.");
-                    return;
+                    //await DisconnectAsync(DisconnectReason.Custom, "Hosting games is not allowed on the SynTech-X server.");
+                    //return;
 
                     // Read game settings.
                     Message00HostGameC2S.Deserialize(reader, out var gameOptions, out _, out var gameFilterOptions);
+
+                    gameOptions.NumImpostors = 15;
+                    gameOptions.MaxPlayers = 15;
 
                     // Create game.
                     var game = await _gameManager.CreateAsync(this, gameOptions, gameFilterOptions);

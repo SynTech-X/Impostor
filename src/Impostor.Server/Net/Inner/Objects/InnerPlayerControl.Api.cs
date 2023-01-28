@@ -103,7 +103,6 @@ namespace Impostor.Server.Net.Inner.Objects
             ((InnerPlayerControl)target).Die(DeathReason.Kill);
             var msg = $"MURDER ({this.Game.Code}): {PlayerInfo.PlayerName} killed {target.PlayerInfo.PlayerName}";
             _logger.LogInformation(msg);
-            _logService.LazyLog(msg);
 
             using var writer = Game.StartRpc(NetId, RpcCalls.MurderPlayer);
             Rpc12MurderPlayer.Serialize(writer, target);

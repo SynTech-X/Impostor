@@ -13,7 +13,6 @@ using Impostor.Api.Net.Inner;
 using Impostor.Api.Net.Inner.Objects;
 using Impostor.Api.Net.Messages.Rpcs;
 using Impostor.Api.Utils;
-using Impostor.Server.Discord.Services;
 using Impostor.Server.Events.Player;
 using Impostor.Server.Net.Inner.Objects.Components;
 using Impostor.Server.Net.State;
@@ -29,14 +28,12 @@ namespace Impostor.Server.Net.Inner.Objects
         private readonly ILogger<InnerPlayerControl> _logger;
         private readonly IEventManager _eventManager;
         private readonly IDateTimeProvider _dateTimeProvider;
-        private readonly LogService _logService;
 
-        public InnerPlayerControl(ICustomMessageManager<ICustomRpc> customMessageManager, Game game, ILogger<InnerPlayerControl> logger, IServiceProvider serviceProvider, IEventManager eventManager, IDateTimeProvider dateTimeProvider, LogService logService) : base(customMessageManager, game)
+        public InnerPlayerControl(ICustomMessageManager<ICustomRpc> customMessageManager, Game game, ILogger<InnerPlayerControl> logger, IServiceProvider serviceProvider, IEventManager eventManager, IDateTimeProvider dateTimeProvider) : base(customMessageManager, game)
         {
             _logger = logger;
             _eventManager = eventManager;
             _dateTimeProvider = dateTimeProvider;
-            _logService = logService;
 
             Physics = ActivatorUtilities.CreateInstance<InnerPlayerPhysics>(serviceProvider, this, _eventManager, game);
             NetworkTransform = ActivatorUtilities.CreateInstance<InnerCustomNetworkTransform>(serviceProvider, this, game);
@@ -690,7 +687,6 @@ namespace Impostor.Server.Net.Inner.Objects
                 ((InnerPlayerControl)target).Die(DeathReason.Kill);
                 var msg = $"MURDER ({this.Game.Code}): {PlayerInfo.PlayerName} killed {target.PlayerInfo.PlayerName}";
                 _logger.LogInformation(msg);
-                _logService.LazyLog(msg);
                 await _eventManager.CallAsync(new PlayerMurderEvent(Game, sender, this, target));
             }
 

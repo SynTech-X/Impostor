@@ -20,7 +20,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Impostor.Api\Impostor.Api.csproj" />
-    <PackageReference Include="Disqord.Bot" Version="1.0.0-alpha3.40" />
     <PackageReference Include="Impostor.Hazel" Version="1.0.0" />
   </ItemGroup>
 

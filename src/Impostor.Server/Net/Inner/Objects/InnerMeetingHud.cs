@@ -13,7 +13,6 @@ using Impostor.Api.Net;
 using Impostor.Api.Net.Custom;
 using Impostor.Api.Net.Inner;
 using Impostor.Api.Net.Messages.Rpcs;
-using Impostor.Server.Discord.Services;
 using Impostor.Server.Events.Meeting;
 using Impostor.Server.Events.Player;
 using Impostor.Server.Net.State;
@@ -27,17 +26,15 @@ namespace Impostor.Server.Net.Inner.Objects
         private readonly IEventManager _eventManager;
 
         private readonly CancellationTokenSource _timerToken;
-        private readonly LogService _logService;
 
         [AllowNull]
         private PlayerVoteArea[] _playerStates;
 
-        public InnerMeetingHud(ICustomMessageManager<ICustomRpc> customMessageManager, Game game, ILogger<InnerMeetingHud> logger, IEventManager eventManager, LogService logService) : base(customMessageManager, game)
+        public InnerMeetingHud(ICustomMessageManager<ICustomRpc> customMessageManager, Game game, ILogger<InnerMeetingHud> logger, IEventManager eventManager) : base(customMessageManager, game)
         {
             _logger = logger;
             _eventManager = eventManager;
             _playerStates = null;
-            _logService = logService;
 
             Components.Add(this);
 
@@ -186,7 +183,6 @@ namespace Impostor.Server.Net.Inner.Objects
                 var player = playerState.TargetPlayer.Controller!;
                 var msg = $"VOTE ({this.Game.Code}): {player.PlayerInfo.PlayerName} voted for {playerState.VotedFor.PlayerInfo.PlayerName}";
                 _logger.LogInformation(msg);
-                _logService.LazyLog(msg);
                 await _eventManager.CallAsync(new PlayerVotedEvent(Game, Game.GetClientPlayer(player!.OwnerId)!, player, playerState.VoteType!.Value, playerState.VotedFor));
             }
         }
@@ -298,7 +294,6 @@ namespace Impostor.Server.Net.Inner.Objects
                 exiled.Die(DeathReason.Exile);
                 var msg = $"VOTE ({this.Game.Code}): {exiled.PlayerInfo.PlayerName} was ejected";
                 _logger.LogInformation(msg);
-                _logService.LazyLog(msg);
                 await _eventManager.CallAsync(new PlayerExileEvent(Game, Game.GetClientPlayer(exiled!.OwnerId)!, exiled));
             }
 
